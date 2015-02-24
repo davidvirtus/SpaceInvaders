@@ -41,6 +41,9 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     int velocidadMarciano = 1;
     
+    ArrayList <Explosion> listaExplosiones = new ArrayList();
+    
+    
     Timer temporizador = new Timer(10, new ActionListener() {
 
         @Override
@@ -140,6 +143,9 @@ public class VentanaJuego extends javax.swing.JFrame {
         //creo un marco para guardar el borde de la imagen del disparo
         Rectangle2D.Double rectanguloDisparo = new Rectangle2D.Double();
         
+        //creo un marco para guardar el borde de la imagen de la explosion
+        Rectangle2D.Double rectanguloExplosion = new Rectangle2D.Double();
+        
         //ahora leo la lista de disparos
         for (int j=0; j<listaDisparos.size(); j++){
             Disparo d = listaDisparos.get(j);
@@ -153,10 +159,24 @@ public class VentanaJuego extends javax.swing.JFrame {
                 if (rectanguloDisparo.intersects(rectanguloMarciano)){
                     listaMarcianos.remove(i);
                     listaDisparos.remove(j);
+                    
+                    Explosion e = new Explosion();
+                    e.setX(m.getX());
+                    e.setY(m.getY());
+                    listaExplosiones.add(e);
                 }
             }
+            
         }
         
+    }
+    
+    private void pintaExplosiones(Graphics2D g2){
+        //pinta la explosion
+        for (int i=0; i<listaExplosiones.size(); i++){
+            Explosion e = listaExplosiones.get(i);
+            g2.drawImage(e.imagenExplosion, e.getX(), e.getY(), null);  
+        }
     }
     
     private void bucleDelJuego(){
@@ -174,7 +194,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         pintaNave(g2);
         pintoDisparos(g2);
         chequeaColision();
-      
+        pintaExplosiones(g2);
         /////////////////////////////////////////////////////
         //apunto al JPanel y dibujo el buffer sobre el JPanel
         g2 = (Graphics2D) jPanel1.getGraphics();
