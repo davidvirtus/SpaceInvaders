@@ -136,6 +136,25 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
     }
     
+    private void pintaExplosiones(Graphics2D g2){
+        //pinta la explosion
+        for (int i=0; i<listaExplosiones.size(); i++){
+            Explosion e = listaExplosiones.get(i);
+            e.setTiempoDeVida(e.getTiempoDeVida() - 1);
+            if (e.getTiempoDeVida() >= 25){
+                g2.drawImage(e.imagenExplosion, e.getX(), e.getY(), null);
+            }
+            else {
+                g2.drawImage(e.imagenExplosion2, e.getX(), e.getY(), null);
+            }
+            
+            //si el tiempo de la vida de la explosión es menor que 0 la elimino
+            if (e.getTiempoDeVida() <= 0){
+                listaExplosiones.remove(i);
+            }
+        }
+    }
+    
     private void chequeaColision(){
         //creo un marco para guardar el borde de la imagen del marciano
         Rectangle2D.Double rectanguloMarciano = new Rectangle2D.Double();
@@ -169,14 +188,6 @@ public class VentanaJuego extends javax.swing.JFrame {
             
         }
         
-    }
-    
-    private void pintaExplosiones(Graphics2D g2){
-        //pinta la explosion
-        for (int i=0; i<listaExplosiones.size(); i++){
-            Explosion e = listaExplosiones.get(i);
-            g2.drawImage(e.imagenExplosion, e.getX(), e.getY(), null);  
-        }
     }
     
     private void bucleDelJuego(){
