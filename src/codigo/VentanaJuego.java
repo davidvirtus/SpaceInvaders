@@ -44,6 +44,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     ArrayList <Explosion> listaExplosiones = new ArrayList();
     
     int contadorTiempo = 0;
+       
     Timer temporizador = new Timer(10, new ActionListener() {
 
         @Override
@@ -85,6 +86,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
     
     private void pintaMarcianos(Graphics2D miGrafico){
+        
         //uso una variable booleana para indicar si ha tocado
         //en la pared derecha o en la pared izquierda
         boolean cambia = false;
@@ -188,6 +190,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                     e.setY(m.getY() +8);
                     listaExplosiones.add(e);
                     listaMarcianos.remove(i);
+                    //no borro el disparo para evitar que se cuelgue
                     //listaDisparos.remove(j);
                     disparoABorrar = true;
                     
@@ -304,6 +307,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             Disparo d = new Disparo();
             d.setX( miNave.getX() + miNave.getAnchoNave() /2 - d.imagenDisparo.getWidth(null)/2);
             d.setY( miNave.getY());
+            d.sonidoDisparo.start();
             
             //agrego el disparo a la lista de disparos
             listaDisparos.add(d);
