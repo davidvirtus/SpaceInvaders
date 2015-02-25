@@ -128,7 +128,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         //pinta los disparos
         for(int i=0; i<listaDisparos.size(); i++){
             disparoAux = listaDisparos.get(i);
-            disparoAux.setY(disparoAux.getY() - 3);
+            disparoAux.setY(disparoAux.getY() - 5);
             if (disparoAux.getY() < 0){
                 listaDisparos.remove(i);
             }
@@ -170,24 +170,27 @@ public class VentanaJuego extends javax.swing.JFrame {
             Disparo d = listaDisparos.get(j);
             //asigno al rectángulo las dimensiones del disparo y su posición
             rectanguloDisparo.setFrame(d.getX(), d.getY(), d.imagenDisparo.getWidth(null), d.imagenDisparo.getHeight(null));
-            
+            boolean disparoABorrar = false;
             //leo la lista de marcianos y comparo uno a uno con el disparo
             for (int i=0; i<listaMarcianos.size(); i++){
                 Marciano m = listaMarcianos.get(i);
                 rectanguloMarciano.setFrame(m.getX(), m.getY(), m.ancho, m.ancho);
                 if (rectanguloDisparo.intersects(rectanguloMarciano)){
-                    listaMarcianos.remove(i);
-                    listaDisparos.remove(j);
-                    
                     Explosion e = new Explosion();
-                    e.setX(m.getX());
-                    e.setY(m.getY());
+                    e.setX(m.getX() +8);
+                    e.setY(m.getY() +8);
                     listaExplosiones.add(e);
+                    listaMarcianos.remove(i);
+                    //listaDisparos.remove(j);
+                    disparoABorrar = true;
+                    
+                    
                 }
             }
-            
+            if (disparoABorrar){
+                listaDisparos.remove(j);
+            }
         }
-        
     }
     
     private void bucleDelJuego(){
