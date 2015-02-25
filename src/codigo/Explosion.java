@@ -4,6 +4,8 @@ package codigo;
 import java.awt.Image;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -17,15 +19,18 @@ public class Explosion {
     //coordenadas de la explosión
     private int x = 0;
     private int y = 0;
+    Clip sonidoExplosion;
     
     //creo un valor que es el tiempo que durará la primera imágen
     private int tiempoDeVida = 50;
     
     public Explosion(){
         try {
+            sonidoExplosion = AudioSystem.getClip();
+            sonidoExplosion.open(AudioSystem.getAudioInputStream(getClass().getResource("/sonidos/explosion.wav")));
             imagenExplosion = ImageIO.read((getClass().getResource("/imagenes/e1.png")));
             imagenExplosion2 = ImageIO.read((getClass().getResource("/imagenes/e2.png")));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             
         }
     }

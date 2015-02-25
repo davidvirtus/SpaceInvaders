@@ -189,6 +189,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                     e.setX(m.getX() +8);
                     e.setY(m.getY() +8);
                     listaExplosiones.add(e);
+                    e.sonidoExplosion.start();
                     listaMarcianos.remove(i);
                     //no borro el disparo para evitar que se cuelgue
                     //listaDisparos.remove(j);
