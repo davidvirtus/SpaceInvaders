@@ -43,7 +43,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     ArrayList <Explosion> listaExplosiones = new ArrayList();
     
-    
+    int contadorTiempo = 0;
     Timer temporizador = new Timer(10, new ActionListener() {
 
         @Override
@@ -102,7 +102,14 @@ public class VentanaJuego extends javax.swing.JFrame {
             if (m.getX() <=0){
                 cambia = true;
             }
-            miGrafico.drawImage(m.imagen1, m.getX(), m.getY(), null);
+            //dibujo la imágen correspondiente de los marcianos
+            if (contadorTiempo < 50){
+                miGrafico.drawImage(m.imagen1, m.getX(), m.getY(), null);
+            }
+            else{
+                miGrafico.drawImage(m.imagen2, m.getX(), m.getY(), null);
+            }
+            
         }
         //si ha tocado cambia la velocidad
         if (cambia){
@@ -192,6 +199,12 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         }
     }
+    private void actualizaContadorTiempo(){
+        contadorTiempo ++;
+        if (contadorTiempo > 100){
+            contadorTiempo = 0;
+        }
+    }
     
     private void bucleDelJuego(){
         //primero apunto al buffer
@@ -209,6 +222,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         pintoDisparos(g2);
         chequeaColision();
         pintaExplosiones(g2);
+        actualizaContadorTiempo();
         /////////////////////////////////////////////////////
         //apunto al JPanel y dibujo el buffer sobre el JPanel
         g2 = (Graphics2D) jPanel1.getGraphics();
